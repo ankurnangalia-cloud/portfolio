@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ankur Nangalia — Product Manager</title>
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --blue: #1B4F72;
+    --accent: #2E86C1;
+    --accent-light: #AED6F1;
+    --gold: #F39C12;
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --light-bg: #EBF5FB;
+    --text: #1A1A2E;
+    --muted: #7F8C8D;
+    --divider: #E8ECF0;
+    --card-bg: #FFFFFF;
+    --green: #1ABC9C;
+    --purple: #8E44AD;
+    --red: #E74C3C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,27,42,0.97); backdrop-filter: blur(10px);
+    padding: 0 5%; display: flex; align-items: center; justify-content: space-between;
+    height: 64px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-brand { color: var(--white); font-size: 1.1rem; font-weight: 700; letter-spacing: -0.3px; text-decoration: none; }
+  .nav-brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--accent); color: var(--white) !important; padding: 8px 18px; border-radius: 6px; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--blue) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; background: var(--navy);
+    display: flex; align-items: center; padding: 100px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,134,193,0.15) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -30%; left: -10%;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(243,156,18,0.08) 0%, transparent 70%);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,134,193,0.15); border: 1px solid rgba(46,134,193,0.3); color: var(--accent-light); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+  .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--white); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1px; }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.65); max-width: 600px; margin-bottom: 2rem; line-height: 1.7; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .btn-primary { background: var(--accent); color: var(--white); padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; }
+  .btn-primary:hover { background: #1a5276; transform: translateY(-1px); }
+  .btn-secondary { border: 1px solid rgba(255,255,255,0.25); color: var(--white); padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.2s; }
+  .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+  .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .stat { }
+  .stat-val { font-size: 1.8rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .stat-val span { color: var(--accent); }
+  .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 1rem; }
+  .section-sub { color: var(--muted); font-size: 1rem; max-width: 600px; line-height: 1.7; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  .about { background: var(--off-white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: #444; line-height: 1.8; margin-bottom: 1rem; font-size: 0.97rem; }
+  .about-text .highlight { color: var(--accent); font-weight: 600; }
+  .about-right { }
+  .philosophy-card { background: var(--white); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .philosophy-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .philosophy-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+  /* GAMES */
+  .games { background: var(--white); }
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .game-card {
+    border-radius: 12px; padding: 1.5rem; position: relative; overflow: hidden;
+    border: 1px solid var(--divider); transition: all 0.25s; cursor: default;
+    background: var(--white);
+  }
+  .game-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+  .game-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .game-card.ludo::before { background: var(--gold); }
+  .game-card.rummy::before { background: var(--accent); }
+  .game-card.poker::before { background: var(--green); }
+  .game-card.dfs::before { background: var(--purple); }
+  .game-card.opinion::before { background: var(--red); }
+  .game-tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; }
+  .game-card.ludo .game-tag { background: #FEF9E7; color: #B7770D; }
+  .game-card.rummy .game-tag { background: var(--light-bg); color: var(--accent); }
+  .game-card.poker .game-tag { background: #E8F8F5; color: #1ABC9C; }
+  .game-card.dfs .game-tag { background: #F5EEF8; color: var(--purple); }
+  .game-card.opinion .game-tag { background: #FDEDEC; color: var(--red); }
+  .game-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .game-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+  /* CASE STUDIES */
+  .cases { background: var(--off-white); }
+  .case-card { background: var(--white); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); border: 1px solid var(--divider); }
+  .case-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+  .case-num { width: 40px; height: 40px; background: var(--accent); color: var(--white); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; }
+  .case-title-block { flex: 1; }
+  .case-title-block h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+  .case-title-block .case-type { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+  .case-metrics { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .metric-pill { background: var(--light-bg); border: 1px solid rgba(46,134,193,0.2); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+  .par-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  @media(max-width:768px) { .par-grid { grid-template-columns: 1fr; } }
+  .par-block { }
+  .par-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 2px solid; }
+  .par-block.problem .par-label { color: var(--red); border-color: var(--red); }
+  .par-block.action .par-label { color: var(--accent); border-color: var(--accent); }
+  .par-block.result .par-label { color: var(--green); border-color: var(--green); }
+  .par-block p, .par-block ul { font-size: 0.87rem; color: #444; line-height: 1.7; }
+  .par-block ul { padding-left: 1rem; }
+  .par-block li { margin-bottom: 0.3rem; }
+  .par-block li strong { color: var(--navy); }
+  .case-learnings { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--divider); }
+  .case-learnings h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 0.5rem; }
+  .case-learnings p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; font-style: italic; }
+
+  /* SKILLS */
+  .skills { background: var(--navy); }
+  .skills .section-title { color: var(--white); }
+  .skills .section-label { color: var(--accent-light); }
+  .skills .section-sub { color: rgba(255,255,255,0.5); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .skill-chip { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1rem 1.25rem; transition: all 0.2s; }
+  .skill-chip:hover { background: rgba(46,134,193,0.15); border-color: rgba(46,134,193,0.4); }
+  .skill-chip h4 { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+  .skill-chip p { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+  /* CONTACT */
+  .contact { background: var(--white); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-text h2 { font-size: 2rem; font-weight: 800; color: var(--navy); margin-bottom: 1rem; }
+  .contact-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border: 1px solid var(--divider); border-radius: 10px; text-decoration: none; color: var(--text); transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); background: var(--light-bg); }
+  .contact-link .link-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--light-bg); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .contact-link .link-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+  .contact-link .link-text span { font-size: 0.8rem; color: var(--muted); }
+  .contact-cta { background: var(--navy); border-radius: 16px; padding: 2.5rem; text-align: center; }
+  .contact-cta h3 { color: var(--white); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .contact-cta p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.7; }
+  .contact-cta a { display: inline-block; background: var(--accent); color: var(--white); padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s; }
+  .contact-cta a:hover { background: var(--blue); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 2rem 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); }
+  footer p { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+  footer span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media(max-width:768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .nav-links { display: none; }
+    .par-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Ankur <span>N.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#games">Products</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <h1>I build products<br/>that <span>people love</span><br/>and businesses <span>trust.</span></h1>
+    <p class="hero-sub">Associate Product Manager with 3.5+ years of experience building consumer gaming products at scale. I turn user problems into shipped features, and features into measurable business outcomes.</p>
+    <div class="hero-actions">
+      <a href="#cases" class="btn-primary">View Case Studies</a>
+      <a href="mailto:ankur.nangalia@gmail.com" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val">3.5<span>+</span></div>
+        <div class="stat-lbl">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">20<span>%</span></div>
+        <div class="stat-lbl">CSAT Improvement</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">7.6<span>%</span></div>
+        <div class="stat-lbl">Revenue Impact</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">The product manager who<br/>shows up with data.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <span class="highlight">Ankur Nangalia</span>, an Associate Product Manager based in New Delhi, India, with 3.5+ years of experience building consumer gaming products at Baazi Games (SportsBaazi) — one of India's leading skill-based gaming platforms.</p>
+        <p>I've owned end-to-end product lifecycles across Ludo, Rummy, Poker, Daily Fantasy Sports, and Opinion Trading — from user research and PRD writing through sprint delivery and post-launch iteration on a platform serving <span class="highlight">50,000+ daily active users.</span></p>
+        <p>My background in <span class="highlight">MSc Mathematics from BITS Pilani</span> gives me a strong quantitative foundation. I don't just ship features — I measure them, learn from them, and iterate.</p>
+      </div>
+      <div class="about-right">
+        <div class="philosophy-card">
+          <h4>🎯 Start with the problem</h4>
+          <p>Every feature I've shipped started with a clearly defined user problem, not a solution. I validate before I build.</p>
+        </div>
+        <div class="philosophy-card">
+          <h4>📊 Measure what matters</h4>
+          <p>I define success metrics before writing a single line of PRD. Impact without measurement is just an assumption.</p>
+        </div>
+        <div class="philosophy-card">
+          <h4>🤝 Alignment is the product</h4>
+          <p>The best PRD in the world fails without engineering, design, and business alignment. I treat stakeholder management as core PM work.</p>
+        </div>
+        <div class="philosophy-card">
+          <h4>🔄 Ship, learn, iterate</h4>
+          <p>I bias toward shipping the smallest testable version, learning from real users, and iterating fast — rather than building in the dark.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="games" id="games">
+  <div class="section-inner">
+    <div class="section-label">Products Worked On</div>
+    <h2 class="section-title">5 product verticals.<br/>One platform. Real money. Real stakes.</h2>
+    <p class="section-sub">At Baazi Games, I worked across five distinct gaming verticals — each with its own user base, mechanics, and product challenges.</p>
+    <div class="games-grid">
+      <div class="game-card ludo">
+        <span class="game-tag">Board Game</span>
+        <h3>🎲 Ludo</h3>
+        <p>Owned engagement and retention features including player journey optimisation, and tournament mechanics on a high-DAU casual gaming platform.</p>
+      </div>
+      <div class="game-card rummy">
+        <span class="game-tag">Card Game</span>
+        <h3>🃏 Rummy</h3>
+        <p>Managed lobby experience, user flow, and real-money transaction integrity in collaboration with 3rd Party.</p>
+      </div>
+      <div class="game-card poker">
+        <span class="game-tag">Card Game</span>
+        <h3>♠️ Poker</h3>
+        <p>Contributed to user migratioin from core games to Poker, maintaining user retention, and increasing Average Revenue Per User(ARPU) by introducing leaderboards.</p>
+      </div>
+      <div class="game-card dfs">
+        <span class="game-tag">Fantasy Sports</span>
+        <h3>🏏 Daily Fantasy Sports</h3>
+        <p>Owned contest creation, player selection experience, scoring mechanics, and post-match result flows. Managed third-party data feed integrations for live match data.</p>
+      </div>
+      <div class="game-card opinion">
+        <span class="game-tag">Prediction Markets</span>
+        <h3>📈 Opinion Trading</h3>
+        <p>Built product features for India's first opinion trading vertical — contract design flows, market creation, settlement logic, and user education for a first-of-its-kind product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases" id="cases">
+  <div class="section-inner">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">The work. The thinking.<br/>The outcomes.</h2>
+    <p class="section-sub">Each case study follows the PAR framework — Problem, Action, Result — to show how I approach product decisions end-to-end.</p>
+
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="case-num">01</div>
+          <div class="case-title-block">
+            <h3>AI-Powered Customer Support Chatbot</h3>
+            <span class="case-type">AI Product · Customer Experience · Process Optimisation</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <span class="metric-pill">CSAT +20.5%</span>
+          <span class="metric-pill">Queries -20%</span>
+          <span class="metric-pill">ART -35%</span>
+        </div>
+      </div>
+      <div class="par-grid">
+        <div class="par-block problem">
+          <div class="par-label">Problem</div>
+          <p>Our support team was overwhelmed with repetitive queries — account issues, game rules, payment questions. CSAT was sitting at 3.4 out of 5, and Average Resolution Time was climbing. Users were waiting too long for help, leading to churn and frustration at critical moments in the game journey.</p>
+        </div>
+        <div class="par-block action">
+          <div class="par-label">Action</div>
+          <p>I owned the end-to-end build of an AI-powered support chatbot. I started by analysing 3 months of support tickets to identify the top 12 query categories. I designed conversation flows for each, defined query classification logic, and built human escalation triggers for edge cases. I worked with engineering on NLP model integration and with operations on the agent handoff workflow. I defined success metrics before a single line of code was written.</p>
+        </div>
+        <div class="par-block result">
+          <div class="par-label">Result</div>
+          <ul>
+            <li>Reduced support query volume by <strong>20%</strong> through automated resolution</li>
+            <li>Improved CSAT from <strong>3.4 to 4.1</strong> — a 20.5% improvement — across 100K+ monthly users</li>
+            <li>Reduced Average Resolution Time (ART) by <strong>35%</strong></li>
+            <li>Recognised with the <strong>'Dynamic Duo' award</strong> for delivery excellence</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-learnings">
+        <h4>🔍 Key Learning</h4>
+        <p>The most impactful decision was starting with ticket data analysis, not user interviews. The patterns in 90 days of tickets told us exactly what to automate, skipping that step would have led us to build flows for assumed problems instead of real ones.</p>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="case-num">02</div>
+          <div class="case-title-block">
+            <h3>Revenue Feature — Consumer Engagement</h3>
+            <span class="case-type">Consumer Product · Revenue Growth · Engagement</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <span class="metric-pill">7.6% Daily Revenue</span>
+          <span class="metric-pill">100K+ Users</span>
+          <span class="metric-pill">ARPU +5%</span>
+        </div>
+      </div>
+      <div class="par-grid">
+        <div class="par-block problem">
+          <div class="par-label">Problem</div>
+          <p>User engagement on the platform was plateauing. We had strong acquisition numbers but returning user sessions were declining and ARPU was flat. The business needed a consumer feature that would both drive engagement and contribute directly to daily revenue — not just a nice-to-have improvement.</p>
+        </div>
+        <div class="par-block action">
+          <div class="par-label">Action</div>
+          <p>I ran discovery sessions with 30+ users across different player cohorts to understand what drove them to return and transact. I analysed cohort data to identify patterns in high-value user behaviour. I translated insights into a prioritised feature set, wrote the PRD, managed agile delivery across engineering and design, and set up A/B testing pre-launch to validate assumptions before full rollout.</p>
+        </div>
+        <div class="par-block result">
+          <div class="par-label">Result</div>
+          <ul>
+            <li>Feature contributed <strong>7.6% to daily platform revenue</strong> within 4 weeks of launch</li>
+            <li>Reached <strong>100,000+ monthly active users</strong> within 3 months</li>
+            <li>Drove <strong>5% ARPU growth</strong> through data-driven engagement design</li>
+            <li>Feature became a permanent part of the core product roadmap</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-learnings">
+        <h4>🔍 Key Learning</h4>
+        <p>Running the A/B test before full rollout was the right call — it caught a UX issue in the payment step that would have suppressed conversion by ~15%. Shipping without the test would have given us a weaker result and a harder post-launch debug.</p>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="case-num">03</div>
+          <div class="case-title-block">
+            <h3>B2B Partner Integration & Third-Party Network</h3>
+            <span class="case-type">B2B Product · API Integration · Revenue</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <span class="metric-pill">Revenue +6%</span>
+          <span class="metric-pill">Zero post-launch issues</span>
+        </div>
+      </div>
+      <div class="par-grid">
+        <div class="par-block problem">
+          <div class="par-label">Problem</div>
+          <p>The platform needed a new revenue channel that didn't require building new consumer products from scratch. A partnership with a third party who can with whom we can work on revenue sharing basis — but it required a complex API integration, tight coordination between internal and external teams, and a product spec precise enough that both sides could build against it.</p>
+        </div>
+        <div class="par-block action">
+          <div class="par-label">Action</div>
+          <p>I took complete ownership of the B2B onboarding. I ran discovery sessions with the partner to document their technical requirements, translated those into internal requirements for our engineering team, and wrote the API integration spec. I managed the testing phase — defining test cases, coordinating UAT between both teams, and tracking blockers through to resolution. I owned the go-live checklist and signed off on launch readiness.</p>
+        </div>
+        <div class="par-block result">
+          <div class="par-label">Result</div>
+          <ul>
+            <li>Delivered integration <strong>on time</strong> with zero post-launch critical issues</li>
+            <li>Drove <strong>6% incremental revenue</strong> through the structured partner network</li>
+            <li>Created a repeatable onboarding playbook used for future partner integrations</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-learnings">
+        <h4>🔍 Key Learning</h4>
+        <p>The biggest risk in B2B integrations is ambiguity in requirements — what each side thinks has been agreed often differs. Writing a shared API spec that both teams signed off on before development started eliminated most of the late-stage surprises.</p>
+      </div>
+    </div>
+
+    <!-- Case 4 -->
+  <!--  <div class="case-card">
+      <div class="case-header">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div class="case-num">04</div>
+          <div class="case-title-block">
+            <h3>Platform Infrastructure & Dependency Reduction</h3>
+            <span class="case-type">Platform Product · Infrastructure · Cross-functional Delivery</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <span class="metric-pill">Dependencies -30%</span>
+          <span class="metric-pill">Zero downtime</span>
+          <span class="metric-pill">50K+ DAU</span>
+        </div>
+      </div>
+      <div class="par-grid">
+        <div class="par-block problem">
+          <div class="par-label">Problem</div>
+          <p>Game verticals on the platform were tightly coupled — a change in one area could impact others, slowing down development and creating fragility at scale. On a 50,000+ DAU platform, any deployment risk was unacceptable. We needed to decouple core verticals to enable faster, independent releases without breaking live games.</p>
+        </div>
+        <div class="par-block action">
+          <div class="par-label">Action</div>
+          <p>I became the product owner for the infrastructure initiative. I worked with engineering leads to map all dependencies, prioritise the highest-risk couplings, and define the decoupling roadmap. I managed delivery across three teams — engineering, data, and operations — writing specs, tracking milestones, and facilitating daily standups to surface blockers early. I designed the rollout plan to ensure zero downtime on the live platform.</p>
+        </div>
+        <div class="par-block result">
+          <div class="par-label">Result</div>
+          <ul>
+            <li>Reduced platform dependencies by <strong>30%</strong> — significantly improving system resilience</li>
+            <li>Delivered with <strong>zero downtime</strong> on a live 50K+ DAU platform</li>
+            <li>Enabled each game vertical to ship <strong>independently</strong> post-delivery</li>
+            <li>Reduced average deployment time for subsequent releases</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-learnings">
+        <h4>🔍 Key Learning</h4>
+        <p>Infrastructure projects are invisible to users but not to the business. The hardest part wasn't the technical work — it was maintaining stakeholder alignment across 3 months of a project where there was no visible feature to show. Weekly written updates to leadership kept momentum and prevented the project from being de-prioritised mid-flight.</p>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-inner">
+    <div class="section-label">Skills & Tools</div>
+    <h2 class="section-title">What I bring to the table.</h2>
+    <p class="section-sub">A blend of product craft, analytical rigour, and cross-functional execution — built across almost 4 years of real-world product work.</p>
+    <div class="skills-grid">
+      <div class="skill-chip">
+        <h4>User Research & Discovery</h4>
+        <p>User interviews, funnel analysis, cohort segmentation, behavioural data</p>
+      </div>
+      <div class="skill-chip">
+        <h4>PRD & Spec Writing</h4>
+        <p>Functional specs, user stories, BRDs, acceptance criteria</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Agile / Scrum</h4>
+        <p>Sprint planning, backlog grooming, standups, retrospectives</p>
+      </div>
+      <div class="skill-chip">
+        <h4>A/B Testing</h4>
+        <p>Hypothesis design, experiment setup, statistical analysis, rollout decisions</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Data & Analytics</h4>
+        <p>CleverTap, SQL basics, funnel analysis, retention metrics, ARPU</p>
+      </div>
+      <div class="skill-chip">
+        <h4>AI Product Development</h4>
+        <p>Conversation design, NLP integration, AI feature scoping</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Roadmap Prioritisation</h4>
+        <p>RICE, ICE, Impact vs Effort, stakeholder alignment</p>
+      </div>
+      <div class="skill-chip">
+        <h4>B2B Partner Management</h4>
+        <p>API integrations, partner onboarding, go-live validation</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Stakeholder Management</h4>
+        <p>Cross-functional coordination, executive communication, alignment</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Go-to-Market</h4>
+        <p>Feature launches, user communication, adoption tracking</p>
+      </div>
+      <div class="skill-chip">
+        <h4>JIRA & Confluence</h4>
+        <p>Sprint management, documentation, product wikis</p>
+      </div>
+      <div class="skill-chip">
+        <h4>Game Mechanics</h4>
+        <p>Engagement loops, retention design, monetisation mechanics</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <div class="section-label">Get In Touch</div>
+        <h2>Let's build something great together.</h2>
+   <!--     <p>I'm actively exploring PM and BA opportunities — especially in Dubai, UAE, and international markets. If you're building something interesting, I'd love to hear about it.</p> -->
+        <div class="contact-links">
+          <a href="mailto:ankur.nangalia@gmail.com" class="contact-link">
+            <span class="link-icon">✉️</span>
+            <span class="link-text">
+              <strong>Email</strong>
+              <span>ankur.nangalia@gmail.com</span>
+            </span>
+          </a>
+          <a href="https://linkedin.com/in/ankurnangalia" target="_blank" class="contact-link">
+            <span class="link-icon">💼</span>
+            <span class="link-text">
+              <strong>LinkedIn</strong>
+              <span>linkedin.com/in/ankurnangalia</span>
+            </span>
+          </a>
+          <a href="tel:+919024341885" class="contact-link">
+            <span class="link-icon">📱</span>
+            <span class="link-text">
+              <strong>Phone</strong>
+              <span>+91-9024341885</span>
+            </span>
+          </a>
+        </div>
+      </div>
+  <!--    <div class="contact-cta">
+        <h3>Open to opportunities in</h3>
+        <p>Dubai · UAE · Australia · Germany<br/>Consumer Tech · Fintech · Gaming · E-Commerce</p>
+        <p style="margin-top:1rem;font-size:0.82rem;">Relocating to Dubai in January 2027. Available for remote conversations now.</p>
+        <a href="mailto:ankur.nangalia@gmail.com" style="margin-top:1.5rem;">Send me a message →</a>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built by <span>Ankur Nangalia</span> · Associate Product Manager · New Delhi, India · © 2026</p>
+</footer>
+
+</body>
+</html>
